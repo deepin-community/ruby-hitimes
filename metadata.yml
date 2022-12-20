@@ -1,0 +1,183 @@
+--- !ruby/object:Gem::Specification
+name: hitimes
+version: !ruby/object:Gem::Version
+  version: 1.2.1
+platform: ruby
+authors:
+- Jeremy Hinegardner
+autorequire: 
+bindir: bin
+cert_chain: []
+date: 2013-03-12 00:00:00.000000000 Z
+dependencies:
+- !ruby/object:Gem::Dependency
+  name: rake
+  requirement: !ruby/object:Gem::Requirement
+    requirements:
+    - - ~>
+      - !ruby/object:Gem::Version
+        version: 10.0.3
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ~>
+      - !ruby/object:Gem::Version
+        version: 10.0.3
+- !ruby/object:Gem::Dependency
+  name: rspec
+  requirement: !ruby/object:Gem::Requirement
+    requirements:
+    - - ~>
+      - !ruby/object:Gem::Version
+        version: 2.13.0
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ~>
+      - !ruby/object:Gem::Version
+        version: 2.13.0
+- !ruby/object:Gem::Dependency
+  name: rdoc
+  requirement: !ruby/object:Gem::Requirement
+    requirements:
+    - - ~>
+      - !ruby/object:Gem::Version
+        version: '4.0'
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ~>
+      - !ruby/object:Gem::Version
+        version: '4.0'
+- !ruby/object:Gem::Dependency
+  name: json
+  requirement: !ruby/object:Gem::Requirement
+    requirements:
+    - - ~>
+      - !ruby/object:Gem::Version
+        version: 1.7.7
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ~>
+      - !ruby/object:Gem::Version
+        version: 1.7.7
+- !ruby/object:Gem::Dependency
+  name: rake-compiler
+  requirement: !ruby/object:Gem::Requirement
+    requirements:
+    - - ~>
+      - !ruby/object:Gem::Version
+        version: 0.8.3
+  type: :development
+  prerelease: false
+  version_requirements: !ruby/object:Gem::Requirement
+    requirements:
+    - - ~>
+      - !ruby/object:Gem::Version
+        version: 0.8.3
+description: 'Hitimes is a fast, high resolution timer library for recording performance
+  metrics.  It uses the appropriate low method calls for each system to get the highest
+  granularity time increments possible.   It currently supports any of the following
+  systems: * any system with the POSIX call `clock_gettime()` * Mac OS X * Windows
+  * JRuby Using Hitimes can be faster than using a series of `Time.new` calls, and
+  it will have a much higher granularity. It is definitely faster than using `Process.times`.'
+email: jeremy@copiousfreetime.org
+executables: []
+extensions:
+- ext/hitimes/c/extconf.rb
+extra_rdoc_files:
+- CONTRIBUTING.md
+- HISTORY.md
+- Manifest.txt
+- README.md
+files:
+- CONTRIBUTING.md
+- HISTORY.md
+- LICENSE
+- Manifest.txt
+- README.md
+- Rakefile
+- examples/benchmarks.rb
+- examples/stats.rb
+- ext/hitimes/c/extconf.rb
+- ext/hitimes/c/hitimes.c
+- ext/hitimes/c/hitimes_instant_clock_gettime.c
+- ext/hitimes/c/hitimes_instant_osx.c
+- ext/hitimes/c/hitimes_instant_windows.c
+- ext/hitimes/c/hitimes_interval.c
+- ext/hitimes/c/hitimes_interval.h
+- ext/hitimes/c/hitimes_stats.c
+- ext/hitimes/c/hitimes_stats.h
+- ext/hitimes/java/src/hitimes/Hitimes.java
+- ext/hitimes/java/src/hitimes/HitimesInterval.java
+- ext/hitimes/java/src/hitimes/HitimesService.java
+- ext/hitimes/java/src/hitimes/HitimesStats.java
+- lib/hitimes.rb
+- lib/hitimes/metric.rb
+- lib/hitimes/mutexed_stats.rb
+- lib/hitimes/paths.rb
+- lib/hitimes/stats.rb
+- lib/hitimes/timed_metric.rb
+- lib/hitimes/timed_value_metric.rb
+- lib/hitimes/value_metric.rb
+- lib/hitimes/version.rb
+- spec/hitimes_spec.rb
+- spec/interval_spec.rb
+- spec/metric_spec.rb
+- spec/mutex_stats_spec.rb
+- spec/paths_spec.rb
+- spec/spec_helper.rb
+- spec/stats_spec.rb
+- spec/timed_metric_spec.rb
+- spec/timed_value_metric_spec.rb
+- spec/value_metric_spec.rb
+- spec/version_spec.rb
+- tasks/default.rake
+- tasks/extension.rake
+- tasks/this.rb
+homepage: http://github.com/copiousfreetime/hitimes
+licenses: []
+metadata: {}
+post_install_message: 
+rdoc_options:
+- --main
+- README.md
+- --markup
+- tomdoc
+require_paths:
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement
+  requirements:
+  - - '>='
+    - !ruby/object:Gem::Version
+      version: '0'
+required_rubygems_version: !ruby/object:Gem::Requirement
+  requirements:
+  - - '>='
+    - !ruby/object:Gem::Version
+      version: '0'
+requirements: []
+rubyforge_project: 
+rubygems_version: 2.0.3
+signing_key: 
+specification_version: 4
+summary: Hitimes is a fast, high resolution timer library for recording performance
+  metrics.  It uses the appropriate low method calls for each system to get the highest
+  granularity time increments possible.
+test_files:
+- spec/hitimes_spec.rb
+- spec/interval_spec.rb
+- spec/metric_spec.rb
+- spec/mutex_stats_spec.rb
+- spec/paths_spec.rb
+- spec/spec_helper.rb
+- spec/stats_spec.rb
+- spec/timed_metric_spec.rb
+- spec/timed_value_metric_spec.rb
+- spec/value_metric_spec.rb
+- spec/version_spec.rb

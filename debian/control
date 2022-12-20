@@ -1,0 +1,32 @@
+Source: ruby-hitimes
+Section: ruby
+Priority: optional
+Maintainer: Debian Ruby Extras Maintainers <pkg-ruby-extras-maintainers@lists.alioth.debian.org>
+Uploaders: Pirate Praveen <praveen@debian.org>
+Build-Depends: debhelper-compat (= 12),
+               gem2deb,
+               ruby-rspec,
+               ruby-simplecov
+Standards-Version: 4.5.0
+Vcs-Git: https://salsa.debian.org/ruby-team/ruby-hitimes.git
+Vcs-Browser: https://salsa.debian.org/ruby-team/ruby-hitimes
+Homepage: https://github.com/copiousfreetime/hitimes
+XS-Ruby-Versions: all
+Testsuite: autopkgtest-pkg-ruby
+Rules-Requires-Root: no
+
+Package: ruby-hitimes
+Architecture: any
+XB-Ruby-Versions: ${ruby:Versions}
+Depends: ${misc:Depends},
+         ${ruby:Depends},
+         ${shlibs:Depends}
+Description: fast, high resolution timer for recording performance metrics
+ Hitimes is a fast, high resolution timer library for recording performance
+ metrics. It uses the appropriate low method calls for each system to get
+ the highest granularity time increments possible.
+ .
+ It currently supports any of the following systems: * any system with the
+ POSIX call `clock_gettime()` * Mac OS X * Windows * JRuby Using Hitimes can
+ be faster than using a series of `Time.new` calls, and it will have a much
+ higher granularity. It is definitely faster than using `Process.times`.

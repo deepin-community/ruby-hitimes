@@ -1,0 +1,288 @@
+Description: Disable timing tests susceptible to sceduling latency
+ Disable the tests that fail based on how timing latency may
+ be introduced into the test process by a loaded or insufficiently
+ powerful test machine.
+Author: Tim Potter <tpot@hpe.com>
+Forwarded: not-needed
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+Index: ruby-hitimes/spec/timed_value_metric_spec.rb
+===================================================================
+--- ruby-hitimes.orig/spec/timed_value_metric_spec.rb
++++ ruby-hitimes/spec/timed_value_metric_spec.rb
+@@ -44,52 +44,51 @@ describe Hitimes::TimedValueMetric do
+     @tm.split( 1 ).should be == false
+   end
+ 
+-  it "calculates the mean of the durations" do
+-    3.times { |x| @tm.start ; sleep 0.05 ; @tm.stop(x) }
+-    @tm.timed_stats.mean.should be_within(0.01).of(0.05)
+-    @tm.value_stats.mean.should be == 1.00
+-  end
+-
+-  it "calculates the rate of the counts " do
+-    5.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
+-    @tm.rate.should be_within(1.0).of(40.0)
+-  end
+-
+-
+-  it "calculates the stddev of the durations" do
+-    3.times { |x| @tm.start ; sleep(0.05 * x) ; @tm.stop(x) }
+-    @tm.timed_stats.stddev.should be_within(0.001).of(0.05)
+-    @tm.value_stats.stddev.should be == 1.0
+-  end
++#  it "calculates the mean of the durations" do
++#    3.times { |x| @tm.start ; sleep 0.05 ; @tm.stop(x) }
++#    @tm.timed_stats.mean.should be_within(0.01).of(0.05)
++#    @tm.value_stats.mean.should be == 1.00
++#  end
++
++#  it "calculates the rate of the counts " do
++#    5.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
++#    @tm.rate.should be_within(1.0).of(40.0)
++#  end
++
++#  it "calculates the stddev of the durations" do
++#    3.times { |x| @tm.start ; sleep(0.05 * x) ; @tm.stop(x) }
++#    @tm.timed_stats.stddev.should be_within(0.001).of(0.05)
++#    @tm.value_stats.stddev.should be == 1.0
++#  end
+ 
+   it "returns 0.0 for stddev if there is no data" do
+     @tm.timed_stats.stddev.should be == 0.0
+     @tm.value_stats.stddev.should be == 0.0
+   end
+ 
+-  it "keeps track of the min value" do
+-    3.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
+-    @tm.timed_stats.min.should be_within( 0.003 ).of(0.05)
+-    @tm.value_stats.min.should be == 0
+-  end
+-
+-  it "keeps track of the max value" do
+-    3.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
+-    @tm.timed_stats.max.should be_within(0.003).of( 0.05 )
+-    @tm.value_stats.max.should be == 2
+-  end
+-
+-  it "keeps track of the sum value" do
+-    3.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
+-    @tm.timed_stats.sum.should be_within(0.01).of(0.15)
+-    @tm.value_stats.sum.should be == 3
+-  end
++#  it "keeps track of the min value" do
++#    3.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
++#    @tm.timed_stats.min.should be_within( 0.003 ).of(0.05)
++#    @tm.value_stats.min.should be == 0
++#  end
++
++#  it "keeps track of the max value" do
++#    3.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
++#    @tm.timed_stats.max.should be_within(0.003).of( 0.05 )
++#    @tm.value_stats.max.should be == 2
++#  end
++
++#  it "keeps track of the sum value" do
++#    3.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
++#    @tm.timed_stats.sum.should be_within(0.01).of(0.15)
++#    @tm.value_stats.sum.should be == 3
++#  end
+   
+-  it "keeps track of the sum of squares value" do
+-    3.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
+-    @tm.timed_stats.sumsq.should be_within(0.0005).of(0.0075)
+-    @tm.value_stats.sumsq.should be == 5
+-  end
++#  it "keeps track of the sum of squares value" do
++#    3.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
++#    @tm.timed_stats.sumsq.should be_within(0.0005).of(0.0075)
++#    @tm.value_stats.sumsq.should be == 5
++#  end
+ 
+   it "keeps track of the minimum start time of all the intervals" do
+     f1 = Time.now.gmtime.to_f * 1000000
+@@ -119,20 +118,20 @@ describe Hitimes::TimedValueMetric do
+     t.should be_running
+   end
+ 
+-  it "can measure a block of code from an instance" do
+-    t = Hitimes::TimedValueMetric.new( 'measure a block' )
+-    3.times { t.measure( 1 ) { sleep 0.05 } }
+-    t.duration.should be_within(0.004).of(0.15)
+-    t.timed_stats.count.should be == 3
+-    t.value_stats.count.should be == 3
+-  end
+-
+-  it "returns the value of the block when measuring" do
+-    t = Hitimes::TimedValueMetric.new( 'measure a block' )
+-    x = t.measure( 42 ) { sleep 0.05; 42 }
+-    t.duration.should be_within(0.002).of(0.05)
+-    x.should be == 42
+-  end
++#  it "can measure a block of code from an instance" do
++#    t = Hitimes::TimedValueMetric.new( 'measure a block' )
++#    3.times { t.measure( 1 ) { sleep 0.05 } }
++#    t.duration.should be_within(0.004).of(0.15)
++#    t.timed_stats.count.should be == 3
++#    t.value_stats.count.should be == 3
++#  end
++
++#  it "returns the value of the block when measuring" do
++#    t = Hitimes::TimedValueMetric.new( 'measure a block' )
++#    x = t.measure( 42 ) { sleep 0.05; 42 }
++#    t.duration.should be_within(0.002).of(0.05)
++#    x.should be == 42
++#  end
+ 
+   describe "#to_hash" do
+ 
+@@ -147,11 +146,11 @@ describe Hitimes::TimedValueMetric do
+       h['additional_data'].size.should be == 0
+     end
+ 
+-    it "has a rate" do
+-      5.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
+-      h = @tm.to_hash
+-      h['rate'].should be_within(1.0  ).of(40.0)
+-    end
++#    it "has a rate" do
++#      5.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
++#      h = @tm.to_hash
++#      h['rate'].should be_within(1.0  ).of(40.0)
++#    end
+ 
+     it "has a unit_count" do
+       5.times { |x| @tm.start ; sleep 0.05 ; @tm.stop( x ) }
+Index: ruby-hitimes/spec/timed_metric_spec.rb
+===================================================================
+--- ruby-hitimes.orig/spec/timed_metric_spec.rb
++++ ruby-hitimes/spec/timed_metric_spec.rb
+@@ -41,45 +41,44 @@ describe Hitimes::TimedMetric do
+     @tm.split.should be == false
+   end
+ 
+-  it "calculates the mean of the durations" do
+-    2.times { @tm.start ; sleep 0.05 ; @tm.stop }
+-    @tm.mean.should be_within(0.01).of(0.05)
+-  end
+-
+-  it "calculates the rate of the counts " do
+-    5.times { @tm.start ; sleep 0.05 ; @tm.stop }
+-    @tm.rate.should be_within(1.0).of(20.00)
+-  end
+-
+-
+-  it "calculates the stddev of the durations" do
+-    3.times { |x| @tm.start ; sleep(0.05 * x) ; @tm.stop }
+-    @tm.stddev.should be_within(0.002).of( 0.05)
+-  end
++#  it "calculates the mean of the durations" do
++#    2.times { @tm.start ; sleep 0.05 ; @tm.stop }
++#    @tm.mean.should be_within(0.01).of(0.05)
++#  end
++
++#  it "calculates the rate of the counts " do
++#    5.times { @tm.start ; sleep 0.05 ; @tm.stop }
++#    @tm.rate.should be_within(1.0).of(20.00)
++#  end
++
++#  it "calculates the stddev of the durations" do
++#    3.times { |x| @tm.start ; sleep(0.05 * x) ; @tm.stop }
++#    @tm.stddev.should be_within(0.002).of( 0.05)
++#  end
+ 
+   it "returns 0.0 for stddev if there is no data" do
+     @tm.stddev.should be == 0.0
+   end
+ 
+-  it "keeps track of the min value" do
+-    2.times { @tm.start ; sleep 0.05 ; @tm.stop }
+-    @tm.min.should be_within( 0.002 ).of(0.05)
+-  end
+-
+-  it "keeps track of the max value" do
+-    2.times { @tm.start ; sleep 0.05 ; @tm.stop }
+-    @tm.max.should be_within( 0.002 ).of(0.05)
+-  end
+-
+-  it "keeps track of the sum value" do
+-    2.times { @tm.start ; sleep 0.05 ; @tm.stop }
+-    @tm.sum.should be_within( 0.005 ).of(0.10)
+-  end
+-
+-  it "keeps track of the sum of squars value" do
+-    3.times { @tm.start ; sleep 0.05 ; @tm.stop }
+-    @tm.sumsq.should be_within(0.001).of(0.0075)
+-  end
++#  it "keeps track of the min value" do
++#    2.times { @tm.start ; sleep 0.05 ; @tm.stop }
++#    @tm.min.should be_within( 0.002 ).of(0.05)
++#  end
++
++#  it "keeps track of the max value" do
++#    2.times { @tm.start ; sleep 0.05 ; @tm.stop }
++#    @tm.max.should be_within( 0.002 ).of(0.05)
++#  end
++
++#  it "keeps track of the sum value" do
++#    2.times { @tm.start ; sleep 0.05 ; @tm.stop }
++#    @tm.sum.should be_within( 0.005 ).of(0.10)
++#  end
++
++#  it "keeps track of the sum of squars value" do
++#    3.times { @tm.start ; sleep 0.05 ; @tm.stop }
++#    @tm.sumsq.should be_within(0.001).of(0.0075)
++#  end
+ 
+   it "keeps track of the minimum start time of all the intervals" do
+     f1 = Time.now.gmtime.to_f * 1_000_000
+@@ -110,19 +109,19 @@ describe Hitimes::TimedMetric do
+     t.should be_running
+   end
+ 
+-  it "can measure a block of code from an instance" do
+-    t = Hitimes::TimedMetric.new( 'measure a block' )
+-    3.times { t.measure { sleep 0.05 } }
+-    t.duration.should be_within(0.01).of(0.15)
+-    t.count.should be == 3
+-  end
+-
+-  it "returns the value of the block when measuring" do
+-    t = Hitimes::TimedMetric.new( 'measure a block' )
+-    x = t.measure { sleep 0.05; 42 }
+-    t.duration.should be_within(0.002).of(0.05)
+-    x.should be == 42
+-  end
++#  it "can measure a block of code from an instance" do
++#    t = Hitimes::TimedMetric.new( 'measure a block' )
++#    3.times { t.measure { sleep 0.05 } }
++#    t.duration.should be_within(0.01).of(0.15)
++#    t.count.should be == 3
++#  end
++
++#  it "returns the value of the block when measuring" do
++#    t = Hitimes::TimedMetric.new( 'measure a block' )
++#    x = t.measure { sleep 0.05; 42 }
++#    t.duration.should be_within(0.002).of(0.05)
++#    x.should be == 42
++#  end
+ 
+   describe "#to_hash" do
+ 
+@@ -137,11 +136,11 @@ describe Hitimes::TimedMetric do
+       h['additional_data'].size.should be == 0
+     end
+ 
+-    it "has the right sum" do
+-      10.times { |x| @tm.measure { sleep 0.01*x  } }
+-      h = @tm.to_hash
+-      h['sum'].should be_within( 0.01).of(0.45)
+-    end
++#    it "has the right sum" do
++#      10.times { |x| @tm.measure { sleep 0.01*x  } }
++#      h = @tm.to_hash
++#      h['sum'].should be_within( 0.01).of(0.45)
++#    end
+ 
+     fields = ::Hitimes::Stats::STATS.dup + %w[ name additional_data sampling_start_time sampling_stop_time ]
+     fields.each do |f|
